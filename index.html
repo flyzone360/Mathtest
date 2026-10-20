@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MathGlow – Tables, Squares & Roots Test</title>
+<style>
+:root{--bg1:#e8ecff;--bg2:#ffe9f5;--card:rgba(255,255,255,.6);--bd:rgba(255,255,255,.8);--tx:#1b1f3b;--mu:#5d6285;--ac:#6c5ce7;--ac2:#00b8d9;--ok:#12b76a;--bad:#f04438;--in:rgba(255,255,255,.75);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#0c0d22;--bg2:#1d1040;--card:rgba(255,255,255,.08);--bd:rgba(255,255,255,.16);--tx:#f2f3ff;--mu:#a4a8d0;--ac:#8b7bff;--ac2:#22d3ee;--ok:#34d399;--bad:#fb7185;--in:rgba(255,255,255,.1)}}
+:root[data-theme="dark"]{--bg1:#0c0d22;--bg2:#1d1040;--card:rgba(255,255,255,.08);--bd:rgba(255,255,255,.16);--tx:#f2f3ff;--mu:#a4a8d0;--ac:#8b7bff;--ac2:#22d3ee;--ok:#34d399;--bad:#fb7185;--in:rgba(255,255,255,.1)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;color:var(--tx);background:linear-gradient(135deg,var(--bg1),var(--bg2));background-attachment:fixed;overflow-x:hidden}
+.blob{position:fixed;border-radius:50%;filter:blur(70px);opacity:.5;z-index:0;pointer-events:none}
+.b1{width:320px;height:320px;background:var(--ac);top:-80px;left:-80px}
+.b2{width:280px;height:280px;background:var(--ac2);bottom:-60px;right:-60px}
+main{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:18px 16px 40px}
+h1{margin:6px 0 2px;font-size:28px;letter-spacing:-.5px;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--mu);margin:0 0 16px;font-size:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:24px;padding:18px;margin-bottom:14px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 10px 40px rgba(60,40,140,.18),inset 0 1px 0 rgba(255,255,255,.35)}
+.lbl{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--mu);margin:0 0 10px;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--bd);background:var(--in);color:var(--tx);padding:10px 14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;transition:.2s}
+.chip.on{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border-color:transparent;box-shadow:0 6px 18px rgba(108,92,231,.4)}
+.row{display:flex;gap:12px;align-items:end}
+.row>div{flex:1}
+input[type=number]{width:100%;font-size:20px;font-weight:700;text-align:center;padding:12px;border-radius:14px;border:1px solid var(--bd);background:var(--in);color:var(--tx);outline:none}
+input[type=number]:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(108,92,231,.25)}
+.btn{width:100%;border:0;padding:15px;border-radius:16px;font-size:17px;font-weight:700;color:#fff;cursor:pointer;background:linear-gradient(135deg,var(--ac),var(--ac2));box-shadow:0 10px 24px rgba(108,92,231,.4),inset 0 1px 0 rgba(255,255,255,.4);transition:.15s}
+.btn:active{transform:scale(.98)}
+.btn.ghost{background:var(--in);color:var(--tx);box-shadow:none;border:1px solid var(--bd);margin-top:10px}
+.hide{display:none!important}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:var(--mu);margin-bottom:10px}
+.bar{height:8px;border-radius:8px;background:var(--in);overflow:hidden;margin-bottom:16px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--ac2));transition:width .4s}
+.q{font-size:46px;font-weight:800;text-align:center;margin:14px 0 18px;letter-spacing:-1px}
+.ans{font-size:30px!important}
+.fb{margin-top:14px;padding:14px;border-radius:16px;font-size:15px;line-height:1.5;animation:pop .3s}
+.fb.ok{background:rgba(18,183,106,.16);border:1px solid var(--ok)}
+.fb.bad{background:rgba(240,68,56,.14);border:1px solid var(--bad)}
+.fb b{font-size:17px}
+@keyframes pop{from{transform:scale(.95);opacity:0}to{transform:none;opacity:1}}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.st{background:var(--in);border:1px solid var(--bd);border-radius:16px;padding:12px;text-align:center}
+.st b{display:block;font-size:24px}.st span{font-size:12px;color:var(--mu)}
+.big{font-size:64px;font-weight:800;text-align:center;margin:6px 0;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.msg{text-align:center;font-size:17px;font-weight:600}
+.mist{padding:10px 0;border-top:1px solid var(--bd);font-size:15px}
+.mist:first-child{border-top:0}
+.mist em{color:var(--bad);font-style:normal;font-weight:700}.mist u{color:var(--ok);text-decoration:none;font-weight:700}
+</style>
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div>
+<main>
+<h1>✨ MathGlow</h1>
+<p class="sub">Practice tables, squares, cubes and roots – and track your score.</p>
+
+<section id="setup">
+ <div class="card"><p class="lbl">1 · Choose test</p><div class="chips" id="modes"></div></div>
+ <div class="card"><p class="lbl" id="rangeLbl">2 · Range</p>
+  <div class="row"><div><p class="lbl">From</p><input type="number" id="from" value="2" min="1" max="100"></div><div><p class="lbl">To</p><input type="number" id="to" value="10" min="1" max="100"></div></div>
+ </div>
+ <div class="card hide" id="multCard"><p class="lbl">Multiply each table up to</p><div class="chips" id="mults"></div></div>
+ <div class="card"><p class="lbl">Number of questions</p><div class="chips" id="counts"></div></div>
+ <button class="btn" id="start">Start test 🚀</button>
+ <div class="card" style="margin-top:14px"><p class="lbl">Your best scores</p><div id="best" style="font-size:14px;color:var(--mu)">No tests taken yet.</div></div>
+</section>
+
+<section id="quiz" class="hide">
+ <div class="card">
+  <div class="top"><span id="prog"></span><span id="live"></span></div>
+  <div class="bar"><i id="barfill"></i></div>
+  <div class="q" id="qtext"></div>
+  <input type="number" id="ans" class="ans" inputmode="numeric" placeholder="Your answer" autocomplete="off">
+  <div id="fb"></div>
+  <button class="btn" id="check" style="margin-top:14px">Check ✔</button>
+  <button class="btn ghost" id="quit">Quit test</button>
+ </div>
+</section>
+
+<section id="result" class="hide">
+ <div class="card">
+  <div class="msg" id="rmsg"></div>
+  <div class="big" id="rscore"></div>
+  <div class="stats"><div class="st"><b id="racc"></b><span>Accuracy</span></div><div class="st"><b id="rtime"></b><span>Time</span></div><div class="st"><b id="rstreak"></b><span>Best streak</span></div></div>
+  <button class="btn" id="again">Try again 🔁</button>
+  <button class="btn ghost" id="home">Change test</button>
+ </div>
+ <div class="card hide" id="mistCard"><p class="lbl">Review your mistakes</p><div id="mists"></div></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const MODES={
+ tables:{name:"✖️ Tables",lbl:"2 · Tables from … to …",def:[2,10]},
+ squares:{name:"² Squares",lbl:"2 · Squares of numbers from … to …",def:[1,25]},
+ cubes:{name:"³ Cubes",lbl:"2 · Cubes of numbers from … to …",def:[1,15]},
+ sqrt:{name:"√ Square roots",lbl:"2 · Roots whose answers go from … to …",def:[1,25]},
+ cbrt:{name:"∛ Cube roots",lbl:"2 · Roots whose answers go from … to …",def:[1,15]}
+};
+let mode="tables",count=10,mult=10,Q=[],i=0,score=0,streak=0,maxStreak=0,t0=0,done=false,wrong=[];
+
+function chips(el,items,get,set){el.innerHTML="";items.forEach(v=>{const b=document.createElement("button");b.className="chip"+(get()===v.k?" on":"");b.textContent=v.t;b.onclick=()=>{set(v.k);chips(el,items,get,set)};el.appendChild(b)})}
+function drawModes(){chips($("modes"),Object.keys(MODES).map(k=>({k,t:MODES[k].name})),()=>mode,k=>{mode=k;$("from").value=MODES[k].def[0];$("to").value=MODES[k].def[1];$("rangeLbl").textContent=MODES[k].lbl;$("multCard").classList.toggle("hide",k!=="tables")})}
+drawModes();
+chips($("counts"),[5,10,20,30].map(n=>({k:n,t:n+" Qs"})),()=>count,k=>count=k);
+chips($("mults"),[10,12,20].map(n=>({k:n,t:"× "+n})),()=>mult,k=>mult=k);
+$("rangeLbl").textContent=MODES[mode].lbl;
+
+function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+function make(){
+ let a=Math.max(1,parseInt($("from").value)||1),b=Math.max(1,parseInt($("to").value)||1);
+ if(a>b)[a,b]=[b,a];
+ const list=[];let last="";
+ for(let k=0;k<count;k++){
+  let q,tries=0;
+  do{
+   const n=rnd(a,b);
+   if(mode==="tables"){const m=rnd(1,mult);const ans=n*m;q={q:`${n} × ${m}`,a:ans,h:`${n} × ${m} = ${ans}`+(m>1?` (since ${n} × ${m-1} = ${n*(m-1)}, then add ${n})`:"")}}
+   else if(mode==="squares")q={q:`${n}²`,a:n*n,h:`${n}² = ${n} × ${n} = ${n*n}`};
+   else if(mode==="cubes")q={q:`${n}³`,a:n**3,h:`${n}³ = ${n} × ${n} × ${n} = ${n*n} × ${n} = ${n**3}`};
+   else if(mode==="sqrt")q={q:`√${n*n}`,a:n,h:`√${n*n} = ${n} because ${n} × ${n} = ${n*n}`};
+   else q={q:`∛${n**3}`,a:n,h:`∛${n**3} = ${n} because ${n} × ${n} × ${n} = ${n**3}`};
+  }while(q.q===last&&++tries<8);
+  last=q.q;list.push(q);
+ }
+ return list;
+}
+function show(id){["setup","quiz","result"].forEach(s=>$(s).classList.toggle("hide",s!==id))}
+
+function start(){
+ Q=make();i=0;score=0;streak=0;maxStreak=0;wrong=[];t0=Date.now();show("quiz");next();
+}
+function next(){
+ done=false;$("fb").innerHTML="";$("ans").value="";$("ans").disabled=false;$("check").textContent="Check ✔";
+ $("qtext").textContent=Q[i].q+" = ?";
+ $("prog").textContent=`Question ${i+1} / ${Q.length}`;
+ $("live").textContent=`⭐ ${score}   🔥 ${streak}`;
+ $("barfill").style.width=(i/Q.length*100)+"%";
+ setTimeout(()=>$("ans").focus(),50);
+}
+function check(){
+ if(done){i++;if(i>=Q.length)return finish();return next()}
+ const v=$("ans").value.trim();
+ if(v==="")return;
+ const u=Number(v),q=Q[i];done=true;$("ans").disabled=true;
+ if(u===q.a){score++;streak++;maxStreak=Math.max(maxStreak,streak);
+  $("fb").innerHTML=`<div class="fb ok"><b>✅ Correct!</b><br>${q.h}</div>`;
+ }else{streak=0;wrong.push({q:q.q,u,a:q.a,h:q.h});
+  const d=u-q.a;
+  $("fb").innerHTML=`<div class="fb bad"><b>❌ Not quite.</b><br>You entered <b>${u}</b>, the right answer is <b>${q.a}</b>${Math.abs(d)<=Math.max(2,q.a*.05)?` (you were off by ${Math.abs(d)})`:""}.<br>${q.h}</div>`;
+ }
+ $("live").textContent=`⭐ ${score}   🔥 ${streak}`;
+ $("barfill").style.width=((i+1)/Q.length*100)+"%";
+ $("check").textContent=i+1>=Q.length?"See results 🏁":"Next ➜";
+}
+function finish(){
+ const secs=Math.round((Date.now()-t0)/1000),acc=Math.round(score/Q.length*100);
+ $("rscore").textContent=`${score} / ${Q.length}`;
+ $("racc").textContent=acc+"%";$("rtime").textContent=Math.floor(secs/60)+":"+String(secs%60).padStart(2,"0");$("rstreak").textContent=maxStreak;
+ $("rmsg").textContent=acc===100?"🏆 Perfect! You’re a math star!":acc>=80?"🎉 Excellent work!":acc>=50?"👍 Good effort – keep practising!":"💪 Don’t give up – review and retry!";
+ $("mistCard").classList.toggle("hide",!wrong.length);
+ $("mists").innerHTML=wrong.map(w=>`<div class="mist">${w.q} → you: <em>${w.u}</em>, correct: <u>${w.a}</u><br><span style="color:var(--mu);font-size:13px">${w.h}</span></div>`).join("");
+ saveBest(acc,secs);show("result");
+}
+function saveBest(acc,secs){
+ try{const k="mathglow_best";let o=JSON.parse(localStorage.getItem(k)||"{}");const cur=o[mode];
+  if(!cur||acc>cur.acc||(acc===cur.acc&&secs<cur.secs)){o[mode]={acc,secs,n:Q.length};localStorage.setItem(k,JSON.stringify(o))}}catch(e){}
+}
+function loadBest(){
+ try{const o=JSON.parse(localStorage.getItem("mathglow_best")||"{}");const ks=Object.keys(o);
+  if(ks.length)$("best").innerHTML=ks.map(k=>`${MODES[k].name}: <b style="color:var(--tx)">${o[k].acc}%</b> (${o[k].n} Qs, ${o[k].secs}s)`).join("<br>")}catch(e){}
+}
+loadBest();
+$("start").onclick=start;
+$("check").onclick=check;
+$("ans").addEventListener("keydown",e=>{if(e.key==="Enter")check()});
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&done&&!$("quiz").classList.contains("hide")&&document.activeElement!==$("check"))check()});
+$("quit").onclick=()=>{show("setup")};
+$("again").onclick=start;
+$("home").onclick=()=>{loadBest();show("setup")};
+</script>
+</body>
+</html>
